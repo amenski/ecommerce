@@ -1,0 +1,125 @@
+<div id="account-wrapper" class="col-xs-12 padd20">
+	<!-- ko if:$root.account.PageName() == 'SignUp' -->
+	<div class="col-xs-12 paddtb25" style="padding-left:30%; padding-right:30%;">
+    	<div class="col-xs-12 bg111 paddtb10" style="margin:auto;">
+        	<h1 class="clr11">Sign Up</h1>
+        	<!-- ko with:$root.account -->
+        	<div class="col-xs-12" id="srvError"></div>
+        	
+        	<div id="inputEmailFrm" class="form-group">
+              <label class="control-label" for="inputEmail">Your Email Address</label>
+              <input type="text" class="form-control" id="inputEmail" 
+              data-bind="textInput:signUpData.Email" placeholder="Enter your email" >
+              <!--aria-describedby="helpBlock2">
+              <span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>-->
+            </div>
+            
+            <div id="inputPasswordFrm" class="form-group">
+              <label class="control-label" for="inputPassword">Your Password</label>
+              <input type="text" class="form-control" id="inputPassword" 
+              data-bind="textInput:signUpData.Password" placeholder="Enter your password">
+            </div>
+            
+            <div id="inputCPasswordFrm" class="form-group">
+              <label class="control-label" for="inputCPassword">Confirm Password</label>
+              <input type="text" class="form-control" id="inputCPassword" 
+              data-bind="textInput:signUpData.CPassword" placeholder="Confirm your password">
+            </div>
+            
+            <div id="inputAccountTypeFrm" class="form-group">
+              <label class="control-label" for="inputAccountType">What do you want to do?</label>
+              <select id="inputAccountType" 
+              data-bind="options: accountTypes,
+                       value: signUpData.AccountType,
+                       optionsCaption: 'Choose...'">
+                </select>
+            </div>
+            
+            <div class="radio">
+              <label>
+                <input type="radio" name="accountEntity" id="Individual" 
+                 value="Individual" data-bind="checked: signUpData.AccountEntity">
+                I want an account as an individual
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="accountEntity" id="Organization" 
+                value="Organization" data-bind="checked: signUpData.AccountEntity">
+                I want an account as an organization
+              </label>
+            </div>
+            
+            <!-- ko if:signUpData.AccountEntity() == 'Individual' -->
+            <div id="inputNameFrm" class="form-group">
+              <label class="control-label" for="inputName">Your Full Name</label>
+              <input type="text" class="form-control" id="inputName" 
+              data-bind="textInput:signUpData.Name" 
+              placeholder="Enter your full name">
+            </div>
+            <!-- /ko -->
+            
+            <!-- ko if:signUpData.AccountEntity() == 'Organization' -->
+            <div id="inputNameFrm" class="form-group">
+              <label class="control-label" for="inputName">Your Organization Name</label>
+              <input type="text" class="form-control" id="inputName" 
+              data-bind="textInput:signUpData.Name" 
+              placeholder="Enter your organization name">
+            </div>
+            <!-- /ko -->
+            
+            <button 
+            	type="submit" 
+            	class="btn btn-warning" 
+            	style="width:100%"
+            	data-bind="click:signUp">
+            		Create Account
+            </button>
+            
+            <div class="clear"></div>
+            <!-- /ko -->
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- /ko -->
+    
+    <!-- ko if:$root.account.PageName() == 'SignIn' -->
+    <div id="inputPasswordFrm" class="col-xs-12 paddtb25" style="padding-left:35%; padding-right:35%;">
+    	<div class="col-xs-12 bg111 paddtb10" style="margin:auto;">
+        <h1 class="clr11">Sign In</h1>
+        
+      <!-- ko with:$root.account -->
+      <div class="col-xs-12" id="srvError"></div>
+      <div id="inputEmailFrm" class="form-group">
+        <label class="control-label" for="inputEmail">Your Email Address</label>
+        <input type="text" class="form-control" id="inputEmail" 
+        data-bind="textInput:signInData.Email" placeholder="Enter your email" >
+     </div>
+      
+      <div id="inputPasswordFrm" class="form-group">
+        <label class="control-label" for="inputPassword">Your Password</label>
+        <input type="text" class="form-control" id="inputPassword" 
+        data-bind="textInput:signInData.Password" placeholder="Enter your password">
+      </div>
+      
+      <div class="form-group clear">
+          <button type="submit" class="btn btn-primary"
+          data-bind="click:signIn" style="width:100%">Sign in</button>
+      </div>
+      
+      <div class="form-group">
+          If you dont have account 
+          <button type="submit" class="btn btn-link" 
+          data-bind="click:function(data, event){$root.navigate('SignUp');}">
+          Register Now</button>
+      </div>
+      
+      <!-- /ko -->
+    	<div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!-- /ko -->
+</div>
+
+

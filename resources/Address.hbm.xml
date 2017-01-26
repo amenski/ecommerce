@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+  <hibernate-mapping>
+    <class name="com.spring.project.model.Address" table="address">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+		<many-to-one name="account" column="account_id" class="com.spring.project.model.Account" not-null="true"/>
+        <property name="email" type="string">
+            <column name="email" length="30" not-null="true" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="13" not-null="true" />
+        </property>
+        <property name="postalCode" type="string">
+            <column name="postal_code" length="7" not-null="true" />
+        </property>
+        <property name="street" type="string">
+            <column name="street" length="30" not-null="true" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="20" not-null="true" />
+        </property>
+        <property name="stateProvince" type="string">
+            <column name="state_province" length="20" not-null="true" />
+        </property>
+        <property name="country" type="string">
+            <column name="country" length="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
+  

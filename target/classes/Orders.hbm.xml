@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.spring.project.model.Orders" table="orders">
+	
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		
+		<many-to-one name="account" class="com.spring.project.model.Account">
+			<column name="customer_id" not-null="true"></column>
+		</many-to-one>
+		
+		<property name="tax" type="double">
+			<column name="tax" not-null="true" />
+		</property>
+		<property name="shipping" type="string">
+			<column name="shipping" length="50"></column>
+		</property>
+		<property name="total" type="double">
+			<column name="total" not-null="true"></column>
+		</property>
+		<property name="status" type="string">
+			<column name="status" not-null="true"></column>
+		</property>
+		<property name="remark" type="int">
+			<column name="remark" not-null="true"></column>
+		</property>
+		<property name="orderDate" type="date">
+			<column name="order_date" not-null="true"></column>
+		</property>
+			
+		<set name="orderItems" table="order_items" lazy="false" fetch="select">
+			<key>
+				<column name="order_id" not-null="true" />
+			</key>
+			<one-to-many class="com.spring.project.model.OrderItem" />
+		</set>
+		
+	</class>
+</hibernate-mapping>

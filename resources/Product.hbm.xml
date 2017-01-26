@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.spring.project.model.Product" table="product">
+		<id name="id">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		
+		<many-to-one name="account" class="com.spring.project.model.Account" 
+			fetch="select" insert="true" update="false">
+			<column name="account_id" not-null="true"></column>
+		</many-to-one>
+		
+		<many-to-one name="category" class="com.spring.project.model.Category" 
+			fetch="select" insert="true" update="false">
+			<column name="category_id" not-null="true"></column>
+		</many-to-one>
+		
+		<set name="productReviews" table="product_review" lazy="false" fetch="select">
+			<key>
+				<column name="product_id" not-null="true" />
+			</key>
+			<one-to-many class="com.spring.project.model.ProductReview" />
+		</set>
+
+		<property name="name" type="string">
+			<column name="name" length="30" not-null="true" />
+		</property>
+		<property name="images" type="string">
+			<column name="images" not-null="true" />
+		</property>
+		<property name="unitPrice" type="double">
+			<column name="unit_price" not-null="true" />
+		</property>
+		<property name="atp" type="string">
+			<column name="atp" length="5" not-null="true" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" />
+		</property>
+	</class>
+</hibernate-mapping>

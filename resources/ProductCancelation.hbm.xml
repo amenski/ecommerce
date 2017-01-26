@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.spring.project.model.ProductCancelation" table="product_cancelation">
+		<id name="id">
+			<column name="id"></column>
+			<generator class="native"></generator>
+		</id>
+		<many-to-one name="product" class="com.spring.project.model.Product">
+			<column name="product_id" not-null="true"></column>
+		</many-to-one>
+
+		<property name="charge" type="double">
+			<column name="charge" not-null="true" />
+		</property>
+		<property name="criteria" type="int">
+			<column name="criteria" not-null="true" />
+		</property>
+
+	</class>
+</hibernate-mapping>

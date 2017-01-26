@@ -1,0 +1,675 @@
+<div id="account-detail-wrapper" class="col-xs-12 padd0">
+	<div id="account-detail-menu" class="col-xs-3 padd0 bg66 bdy-menu">
+		<ul>
+			<!-- ko with:$root.account_detail -->
+			<li><a
+				data-bind="click:function(data,event){navigate('Portfolio');}">Portfolio</a></li>
+
+			<!-- ko if:detail.accountType()=='Purchase products' || detail.accountType()=='Both' -->
+			<li style="margin-top: 15px;"><a
+				data-bind="click:function(data,event){navigate('MyOrders');}">My
+					Orders</a></li>
+			<li><a
+				data-bind="click:function(data,event){navigate('MyWishList');}">My
+					Wish List</a></li>
+			<!-- /ko -->
+
+			<!-- ko if:detail.accountType()=='Sale Products' || detail.accountType()=='Both' -->
+			<li style="margin-top: 15px;"><a
+				data-bind="click:function(data,event){navigate('MyProducts');}">My
+					Products</a></li>
+			<li><a
+				data-bind="click:function(data,event){navigate('MySales');}">My
+					Sales</a></li>
+			<!-- /ko -->
+
+			<li style="margin-top: 15px;"><a
+				data-bind="click:function(data,event){navigate('Privacy');}">Privacy</a></li>
+			<li><a href="LogOut">Logout</a></li>
+			<!-- /ko -->
+		</ul>
+	</div>
+	<div id="account-detail-content" class="col-xs-9">
+
+
+		<!-- ko if:$root.account_detail.PageName() == "Portfolio" -->
+		<h1 class="clr11">Portfolio</h1>
+		<div class="col-xs-12 paddtb25"
+			style="padding-left: 20%; padding-right: 20%;"
+			data-bind="with:$root.account_detail.detail">
+			<div class="col-xs-12">
+			
+			<!-- ko if:$root.account_detail.myPortfolio.PageName() == "List" -->
+			<table class="table table-striped">
+				<tr>
+					<td rowspan="3">
+						<div id="usr-logo" style="float:none;margin:0px auto;width:100px;height:100px;overflow:hidden">
+						   
+						    <!-- ko ifnot:image() == '' -->
+						    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/file_upload/'+image()}"/>
+						    <!-- /ko -->
+						    <!-- ko if:image() == '' -->
+						    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/style/images/default_logo_'+$root.account_detail.entity()+'.png'}" />
+						    <!-- /ko -->
+						   
+						</div>
+						<div class="clear"></div>
+					</td>
+					<td><strong>Email : </strong><span data-bind="text:email()!=''?email():'N/A'"></span></td>
+				</tr>
+				<tr><td><strong>Account Type : </strong><span data-bind="text:accountType()!=''?accountType():'N/A'"></span></td></tr>	
+				<tr><td><strong>Account Status : </strong><span data-bind="text:accountStatus()!=''?accountStatus():'N/A'"></span></td></tr>
+				
+				<!-- ko if:$root.account_detail.entity() == "Individual" -->
+					<tr>
+						<td><strong>Last Name : </strong><span data-bind="text:lastName()!=''?lastName():'N/A'"></span></td>
+						<td><strong>First &amp; Middle Name : </strong><span data-bind="text:name()+' '+middleName()"></span></td>
+					</tr>
+					<tr>
+						<td><strong>Date of Birth : </strong><span data-bind="text:dob()!=''?dob():'N/A'"></span></td>
+						<td><strong>Gender : </strong><span data-bind="text:gender()!=''?gender():'N/A'"></span></td>
+					</tr>
+				<!-- /ko -->
+				<!-- ko if:$root.account_detail.entity() == "Organization" -->
+					<tr>
+						<td><strong>Organization Name :</strong>
+						<span data-bind="text:name"></span></td>
+						<td><strong>Legal Status :</strong>
+						<span data-bind="text:legalStatus()!=''?legalStatus():'N/A'"></span></td>
+					</tr>
+					<tr>
+						<td><strong>Established Date : </strong><span data-bind="text:establishedDate()!=''?establishedDate():'N/A'"></span></td>
+						<td><strong>established By : </strong><span data-bind="text:establishedBy()!=''?establishedBy():'N/A'"></span></td>
+					</tr>
+					<tr>
+						<td colspan="2"><strong>Description :</strong><br>
+						<span data-bind="text:description()!=''?description():'N/A'"></span></td>
+					</tr>
+				<!-- /ko -->
+				<tr>
+					<td colspan="2"><button class="btn btn-success btn-md" data-bind="click:function(data,event){$root.account_detail.myPortfolio.navigate('Edit');}">Edit</button></td>
+				</tr>
+			</table>
+			<!-- /ko -->
+			<!-- /////////////////////////////////////////////////////////////// -->
+			<!-- Account edit -->
+			<!-- ko if:$root.account_detail.myPortfolio.PageName() == "Edit" -->
+			<table class="table table-striped">
+				<tr>
+					<td rowspan="3">
+						<!-- ko if:$root.account_detail.myProfile.logoMode()=='View'-->
+						<div id="usr-logo" style="float:none;margin:0px auto;width:100px;height:100px;overflow:hidden">	   
+						    <!-- ko ifnot:image() == '' -->
+						    <img class="img-circle" width="100%"  height="100%" data-bind="attr:{src:'webresources/file_upload/'+image()}"/>
+						    <!-- /ko -->
+						    <!-- ko if:image() == '' -->
+						    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/style/images/default_logo_'+$root.account_detail.entity()+'.png'}" />
+						    <!-- /ko -->
+						</div>
+						<div class="clear"></div>
+						<div class="fltlft paddlr10 paddtb5">
+						    <button type="submit" class="btn btn-warning btn-xs"  
+						    data-bind="click:function(data,event){$root.account_detail.myProfile.chngLogoImgMode('Edit');}">Update Logo</button>
+						</div>
+						
+						<!--/ko-->
+						
+						<!-- ko if:$root.account_detail.myProfile.logoMode() == 'Edit' -->
+						<div id="logo-thumb" style="float:none;margin:0px auto;width:100px;height:100px;">
+					        <!-- ko ifnot:$root.account_detail.myProfile.logoImgNew() == '' -->
+						    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/file_upload/'+$root.account_detail.myProfile.logoImgNew()}"/>
+						    <!-- /ko -->
+						    <!-- ko if:$root.account_detail.myProfile.logoImgNew() == '' -->
+						    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/style/images/default_logo_'+$root.account_detail.entity()+'.png'}" />
+						    <!-- /ko -->
+					        <div class="clear"></div>
+					    </div>
+					    
+					    <div class="fltlft clear" style="width:0px;height:0px;overflow:hidden">
+				            <iframe id="logo_ifrm" name="logo_ifrm" ></iframe>
+				            <input type="hidden" id="logo_file_name" />
+				            <input type="hidden" id="logo_file_location" />
+				            <input type="hidden" id="logo_file_status" />
+				            <form enctype="multipart/form-data" action="UploadLogo"
+				                method="post" target="logo_ifrm" id="logo_add_image" >
+				                <input type="file" id="logo_file" name="logo_file" />
+				                <input type="submit"  />
+				            </form>
+				        </div>
+				        
+				        <div class="fltlft clear">
+				            <button id="logo_browse"
+				                class="btn btn-sm btn-info"
+				                style="margin-right:3px;">Upload Logo</button>
+				            <span id="logo_error" class="help-block txt12 clrred"></span>
+				        </div>
+				        
+				        
+						<!-- /ko -->
+						<div class="clear"></div>
+					</td>
+					<td>
+						<label class="control-label" for="inputEmail">Email</label> 
+						<input type="text" class="form-control" id="inputName"
+						data-bind="textInput:email" placeholder="Enter name">	
+					</td>
+				</tr>
+
+				<tr><td><strong>Account Type : </strong><span data-bind="text:accountType()!=''?accountType():'N/A'"></span></td></tr>	
+				<tr><td><strong>Account Status : </strong><span data-bind="text:accountStatus()!=''?accountStatus():'N/A'"></span></td></tr>
+				
+				<!-- ko if:$root.account_detail.entity() == "Individual" -->
+					<tr>
+						<td>
+							<label class="control-label" for="inputLastName">Last Name </label> 
+							<input type="text" class="form-control" id="inputLastName"
+							data-bind="textInput:lastName" placeholder="Enter last name">
+						</td>	
+						<td>
+							<label class="control-label" for="inputFirstName">First Name </label> 
+							<input type="text" class="form-control" id="inputFirstName"
+							data-bind="textInput:name" placeholder="Enter first name">
+						</td>	
+					</tr>
+					<tr>
+						<td>
+							<label class="control-label" for="inputDob">Date of Birth </label> 
+							<input type="text" class="form-control" id="inputDob"
+							data-bind="textInput:dob" placeholder="Enter date of birth">
+						</td>	
+						<td>
+							<label class="control-label" for="inputGender">Gender</label> 
+							<input type="text" class="form-control" id="inputGender"
+							data-bind="textInput:gender" placeholder="Enter Gender">
+						</td>
+					</tr>
+				<!-- /ko -->
+				<!-- ko if:$root.account_detail.entity() == "Organization" -->
+					<tr>
+							
+						<td>
+							<label class="control-label" for="inputOrgName">Organization Name </label> 
+							<input type="text" class="form-control" id="inputOrgName"
+							data-bind="textInput:name" placeholder="Enter organization name">
+						</td>	
+						<td>
+							<label class="control-label" for="inputlegalStatus">Legal Status </label> 
+							<input type="text" class="form-control" id="inputlegalStatus"
+							data-bind="textInput:legalStatus" placeholder="Enter legal status">
+						</td>
+					</tr>
+					<tr>	
+						<td>
+							<label class="control-label" for="inputestablishedDate">Established Date </label> 
+							<input type="text" class="form-control" id="inputestablishedDate"
+							data-bind="textInput:establishedDate" placeholder="Enter the established date">
+						</td>	
+						<td>
+							<label class="control-label" for="inputestablishedBy">Established By </label> 
+							<input type="text" class="form-control" id="inputestablishedBy"
+							data-bind="textInput:establishedBy" placeholder="Enter the established by">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<label class="control-label" for="inputdescription">Description </label> 
+							<input type="text" class="form-control" id="inputdescription"
+							data-bind="textInput:description" placeholder="Enter the description">
+						</td>
+					</tr>
+				<!-- /ko -->
+				<tr>
+					<td>
+						<button class="btn btn-success btn-md" 
+						data-bind="click:function(data,event){$root.account_detail.myPortfolio.sendData();}">Save</button>
+						
+						<button class="btn btn-success btn-md" 
+						data-bind="click:function(data,event){$root.account_detail.myPortfolio.navigate('List');}">Back</button>
+					</td>
+				</tr>
+			</table>
+			<!-- /ko -->
+			<!-- End Account edit -->
+			<!-- /////////////////////////////////////////////////////////////// -->
+			</div>
+			
+			
+		</div>
+		<!-- /ko -->
+
+		<!-- ko if:$root.account_detail.PageName() == "MyOrders" -->
+		<!-- ko with:$root.account_detail -->
+		<h1 class="clr11">My Orders</h1>
+
+		<!-- ko ifnot:myOrder.PageName() == "List" -->
+		<!-- ko with:myOrder.dtlData -->
+
+		<!-- ko if:$parent.myOrder.PageName() == "Detail" -->
+		<div class="col-xs-12 paddtb25"
+			style="padding-left: 20%; padding-right: 20%;">
+			<div class="col-xs-12 bg111 paddtb10" style="margin: auto;">
+				
+				<h1 class="clr11">Order Detail</h1>
+				<table class="table table-striped">
+					<tr>
+						<td colspan="4" style="text-align:right">
+							<strong>Date :</strong>
+							<span data-bind="text:orderDate"></span><br>
+							<strong>Status :</strong>
+							<span data-bind="text:status"></span>
+						</td>
+					</tr>
+					<tr><td colspan="4">Name</td></tr>
+					<tr><td colspan="4" data-bind="text:$root.accountDetail.name"></td></tr>
+					<tr>
+						<td>Product Name</td>
+						<td>Unit Price</td>
+						<td>Quantity</td>
+						<td>Total</td>
+					</tr>
+					<!-- ko foreach:orderItems -->
+					<tr>
+						<td data-bind="text:product"></td>
+						<td data-bind="text:unitPrice"></td>
+						<td data-bind="text:quantity"></td>
+						<td data-bind="text:total"></td>
+					</tr>
+					<!-- /ko -->
+					<tr><td colspan="3"></td><td><strong>Tax : </strong><span data-bind="text:tax"></span></td></tr>
+					<tr><td colspan="3"></td><td><strong>Shipping : </strong><span data-bind="text:shipping"></span></td></tr>
+					<tr><td colspan="3"></td><td><strong>Total : </strong><span data-bind="text:total"></span></td></tr>
+				</table>
+				
+
+				<button type="submit" class="btn btn-info"
+					data-bind="click:function(data,type){$root.account_detail.myOrder.index();}">
+					Back</button>
+
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!--/ko-->
+
+		<!-- ko if:$parent.myOrder.PageName() == "Delete" -->
+		<div class="alert alert-danger" style="padding: 10px;">
+			<table>
+				<tr>
+					<td align="right" style="font-weight: bold">Are you sure you
+						want to delete the order for <span data-bind="text:id"></span>?
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<button class="btn btn-info btn-sm" type="button"
+							id="abt_conf_delt"
+							data-bind="click:function(data,type){$parent.myOrder.manageOrder('DeleteOrder');}">Yes</button>
+
+						<button class="btn btn-warning btn-sm" type="button"
+							data-bind="click:function(data,type){$root.account_detail.index();}">No</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--/ko-->
+		
+		<!-- ko if:$parent.myOrder.PageName() == "CancelOrder" -->
+		<div class="alert alert-danger" style="padding: 10px;">
+			<table>
+				<tr>
+					<td align="right" style="font-weight: bold">Are you sure you
+						want to cancel the order for <span data-bind="text:id"></span>?
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<button class="btn btn-info btn-sm" type="button"
+							id="abt_conf_delt"
+							data-bind="click:function(data,type){$parent.myOrder.manageOrder('CancelOrder');}">Yes</button>
+
+						<button class="btn btn-warning btn-sm" type="button"
+							data-bind="click:function(data,type){$root.account_detail.index();}">No</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--/ko-->
+		
+		
+
+		<!--/ko-->
+		<!--/ko-->
+
+		<!-- ko if:myOrder.PageName() == "List" -->
+		<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<tr>
+					<th>ID</th>
+					<th>Date</th>
+					<th>Total</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+
+				<!-- ko foreach:data.MyOrders -->
+				<tr>
+					<td data-bind="text:id"></td>
+					<td data-bind="text:orderDate"></td>
+					<td data-bind="text:total"></td>
+					<td data-bind="text:status"></td>
+					<td>
+						<button class="btn btn-success btn-xs"
+							data-bind="click:function(data, event){$parent.myOrder.navigate('Detail', data);}">View</button>
+						<!-- ko if:status() == "Pending" -->
+						<button class="btn btn-warning btn-xs"
+							data-bind="click:function(data, event){$parent.myOrder.navigate('CancelOrder', data);}">Cancel Order</button>
+						<!-- /ko -->
+						<button class="btn btn-danger btn-xs"
+							data-bind="click:function(data, event){$parent.myOrder.navigate('Delete', data);}">Remove Order</button>
+					</td>
+				</tr>
+				<!-- /ko -->
+			</table>
+		</div>
+		<!--/ko-->
+
+		<!-- /ko -->
+		<!-- /ko -->
+		<!-- End of My Orders -->
+
+		<!-- ko if:$root.account_detail.PageName() == "MyWishList" -->
+		<h1 class="clr11">My Wish List</h1>
+		<div class="col-xs-8">
+			<table class="table table-striped table-condensed">
+				<tr><th>Product</th><th>Price</th><th>Action</th></tr>
+				<!-- ko foreach: $root.account_detail.data.MyWishList -->
+					<tr>
+						<td data-bind="text:name"></td>
+						<td data-bind="text:unitPrice"></td>
+						<td>
+							<button class="btn btn-success btn-xs"  
+							data-bind="click:function(data,event){$root.account_detail.myWishList.addToCart(data);}">Add To Cart</button>
+						
+							<button class="btn btn-danger btn-xs"  
+							data-bind="click:function(data,event){$root.account_detail.myWishList.manageWishList('DeleteWishList', data);}">Remove</button>
+						</td>
+					</tr>					
+				<!-- /ko -->
+			</table></div>
+		<div class="col-xs-4 paddtb20">
+				<div class="list-group">
+					<!-- ko if:$root.category.order.cart().length == 0 -->
+					<!-- ko if:$root.category.order.orderStatus() == true -->
+					<div class="alert alert-info" style="padding:10px;">
+                       You have successfully sent your order. Thank you for your order.
+                      </div>
+                     <!-- /ko -->
+					<!-- /ko -->
+					<!-- ko ifnot:$root.category.order.cart().length == 0 -->
+					<a href="#" class="list-group-item active">
+						<h4 class="list-group-item-heading">Your Purchase Order</h4>
+					</a>
+					<!-- ko foreach:$root.category.order.cart -->
+					<a href="#" class="list-group-item">
+						<h4 class="list-group-item-heading" data-bind="text:productName">Product Name</h4>
+						<p class="list-group-item-text" >
+							<strong>Unit Price : </strong><span data-bind="text:unitPrice"></span>
+							<strong> Quantity : </strong><span data-bind="text:quantity"></span>
+							<strong> Total : </strong><span data-bind="text:total"></span>
+						</p>
+						<p class="list-group-item-text" >
+							<button class="btn btn-link btn-xs">Remove</button>
+						</p>
+					</a>
+					<!-- /ko -->
+					<!-- ko with:$root.category.order.orderDetail-->
+					<a href="#" class="list-group-item list-group-item-danger">
+						<p class="list-group-item-text" >
+							<strong>Shipping : </strong><span data-bind="text:shipping"></span><br>
+							<strong> Tax : </strong><span data-bind="text:tax()+'%'"></span><br>
+							<strong> Total : </strong><span data-bind="text:total"></span>
+						</p>
+						<p class="list-group-item-text" >
+							<button class="btn btn-warning btn-xs" 
+							data-bind="click:function(data,event){}">
+							Clean Cart</button>
+							
+							<button class="btn btn-danger btn-xs" 
+							data-bind="click:function(data,event){$root.category.order.sendOrder();}">
+							Make Checkout</button>
+						</p>
+					</a>
+					<!-- /ko -->
+					<!-- /ko -->
+				</div>
+			</div>
+		<!-- /ko -->
+
+		<!-- ko if:$root.account_detail.PageName() == "MyProducts" -->
+		<!-- ko with:$root.account_detail -->
+		<h1 class="clr11">My Products</h1>
+
+		<!-- ko ifnot:myProduct.PageName() == "List" -->
+		<!-- ko with:myProduct.dtlData -->
+
+		<!-- ko ifnot:$parent.myProduct.PageName() == "Delete" -->
+		<div class="col-xs-12 paddtb25"
+			style="padding-left: 20%; padding-right: 20%;">
+			<div class="col-xs-12 bg111 paddtb10" style="margin: auto;">
+				<!-- ko if:$parent.myProduct.PageName() == "Add"-->
+				<h1 class="clr11">Create New Product</h1>
+				<!--/ko-->
+				<!-- ko if:$parent.myProduct.PageName() == "Edit"-->
+				<h1 class="clr11">Update Product</h1>
+				<!--/ko-->
+				<!-- ko if:$parent.myProduct.PageName() == "Detail"-->
+				<h1 class="clr11">Product Detail</h1>
+				<!--/ko-->
+
+				<div class="col-xs-12" id="srvError"></div>
+				<div class="col-xs-6">
+				<div id="proimg-thumb" style="float:none;margin:0px auto;width:100px;height:100px;">
+			        <!-- ko ifnot:$root.account_detail.myProduct.proImgNew() == '' -->
+				    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/file_upload/'+$root.account_detail.myProduct.proImgNew()}"/>
+				    <!-- /ko -->
+				    <!-- ko if:$root.account_detail.myProduct.proImgNew() == '' -->
+				    <img class="img-circle" width="100%" height="100%" data-bind="attr:{src:'webresources/style/images/default_proimg_'+$root.account_detail.entity()+'.png'}" />
+				    <!-- /ko -->
+			        <div class="clear"></div>
+			    </div>
+			    
+			    <div class="fltlft clear" style="width:0px;height:0px;overflow:hidden">
+		            <iframe id="proimg_ifrm" name="proimg_ifrm" ></iframe>
+		            <input type="hidden" id="proimg_file_name" />
+		            <input type="hidden" id="proimg_file_location" />
+		            <input type="hidden" id="proimg_file_status" />
+		            <form enctype="multipart/form-data" action="UploadProductImg"
+		                method="post" target="proimg_ifrm" id="proimg_add_image" >
+		                <input type="file" id="proimg_file" name="proimg_file" />
+		                <input type="submit"  />
+		            </form>
+		        </div>
+		        
+		        <div class="fltlft clear">
+		            <button id="proimg_browse"
+		                class="btn btn-sm btn-info"
+		                style="margin-right:3px;">Upload Product</button>
+		            <span id="proimg_error" class="help-block txt12 clrred"></span>
+		        </div>
+		        </div>
+		        
+				<div id="prd_frm_category" class="form-group clear">
+					<label class="control-label" for="inputCategory">Product
+						Category</label> <select id="inputCategory"
+						data-bind="options: $root.account_detail.myProduct.availableCategories, 
+	                  			optionsText:'name', 
+	                  			optionsValue:'id', 
+	                           value: category,
+	                           optionsCaption: 'Choose...', 
+	                           disabled:$parent.myProduct.PageName() == 'Detail'">
+					</select>
+				</div>
+
+				<div id="prd_frm_name" class="form-group clear">
+					<label class="control-label" for="inputName">Product Name</label> <input
+						type="text" class="form-control" id="inputName"
+						data-bind="textInput:name, disabled:$parent.myProduct.PageName() == 'Detail'"
+						placeholder="Enter product name">
+				</div>
+
+				<div id="prd_frm_unit" class="form-group">
+					<label class="control-label" for="inputUnit">Product Unit
+						Price</label> <input type="text" class="form-control" id="inputUnit"
+						data-bind="textInput:unitPrice, disabled:$parent.myProduct.PageName() == 'Detail'"
+						placeholder="Enter product unit price">
+				</div>
+
+				<div id="prd_frm_atp" class="form-group">
+					<label class="control-label" for="inputATP">Product
+						Available</label> <input type="text" class="form-control" id="inputATP"
+						data-bind="textInput:atp, disabled:$parent.myProduct.PageName() == 'Detail'"
+						placeholder="Enter product available">
+				</div>
+
+				<div id="prd_frm_description" class="form-group">
+					<label class="control-label" for="inputDescription">Product
+						Description</label> <input type="text" class="form-control"
+						id="inputDescription"
+						data-bind="textInput:description, disabled:$parent.myProduct.PageName() == 'Detail'"
+						placeholder="Enter product description">
+				</div>
+
+				<!-- ko if:$parent.myProduct.PageName() == "Add"-->
+				<button type="submit" class="btn btn-warning"
+					data-bind="click:function(data,type){$parent.myProduct.manageProduct('CreateNewProduct');}">
+					Save Product</button>
+				<!--/ko-->
+
+				<!-- ko if:$parent.myProduct.PageName() == "Edit"-->
+				<button type="submit" class="btn btn-warning"
+					data-bind="click:function(data,type){$parent.myProduct.manageProduct('UpdateProduct');}">
+					Save Product</button>
+				<!--/ko-->
+
+				<button type="submit" class="btn btn-info"
+					data-bind="click:function(data,type){$root.account_detail.index();}">
+					Back</button>
+
+
+
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!--/ko-->
+
+		<!-- ko if:$parent.myProduct.PageName() == "Delete" -->
+		<div class="alert alert-danger" style="padding: 10px;">
+			<table>
+				<tr>
+					<td align="right" style="font-weight: bold">Are you sure you
+						want to delete <span data-bind="text:name"></span>?
+					</td>
+				</tr>
+				<tr>
+					<td align="right">
+						<button class="btn btn-info btn-sm" type="button"
+							id="abt_conf_delt"
+							data-bind="click:function(data,type){$parent.myProduct.manageProduct('DeleteProduct');}">Yes</button>
+
+						<button class="btn btn-warning btn-sm" type="button"
+							data-bind="click:function(data,type){$root.account_detail.index();}">No</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!--/ko-->
+
+		<!--/ko-->
+		<!--/ko-->
+
+		<!-- ko if:myProduct.PageName() == "List" -->
+		<div class="table-responsive">
+			<button class="btn btn-warning"
+				data-bind="click:function(data, event){myProduct.navigate('Add');}">
+				Create New Product</button>
+			<table class="table table-striped table-hover">
+				<tr>
+					<th>Product Name</th>
+					<th>Unit Price</th>
+					<th>Available</th>
+					<th></th>
+				</tr>
+
+				<!-- ko foreach:data.MyProducts -->
+				<tr>
+					<td data-bind="text:name"></td>
+					<td data-bind="text:unitPrice"></td>
+					<td data-bind="text:atp"></td>
+					<td>
+						<button class="btn btn-success btn-xs"
+							data-bind="click:function(data, event){$parent.myProduct.navigate('Detail', data);}">View</button>
+						<button class="btn btn-warning btn-xs"
+							data-bind="click:function(data, event){$parent.myProduct.navigate('Edit', data);}">Edit</button>
+						<button class="btn btn-danger btn-xs"
+							data-bind="click:function(data, event){$parent.myProduct.navigate('Delete', data);}">Delete</button>
+					</td>
+				</tr>
+				<!-- /ko -->
+			</table>
+		</div>
+		<!--/ko-->
+
+		<!-- /ko -->
+		<!-- /ko -->
+
+		<!-- ko if:$root.account_detail.PageName() == "MySales" -->
+		<h1 class="clr11">My Sales</h1>
+		<!-- /ko -->
+
+		<!-- ko if:$root.account_detail.PageName() == "Privacy" -->
+		<h1 class="clr11">Privacy</h1>
+		<div class="col-xs-12 paddtb25"
+			style="padding-left: 20%; padding-right: 20%;">
+			<div class="col-xs-12 bg111 paddtb10" style="margin: auto;">
+				
+				<div class="col-xs-12" id="srvError"></div>
+				<!-- ko with:$root.account_detail.privacy.dtlData -->
+				<div id="prv_frm_current" class="form-group">
+					<label class="control-label" for="inputCurrentPassword">Current Password</label> <input
+						type="text" class="form-control" id="inputCurrentPassword"
+						data-bind="textInput:currentPassword, disabled:$parent.privacy.PageName() == 'Detail'"
+						placeholder="Enter Privacy current">
+				</div>
+
+				<div id="prv_frm_new" class="form-group">
+					<label class="control-label" for="inputNewPassword">New Password
+						Price</label> <input type="text" class="form-control" id="inputNewPassword"
+						data-bind="textInput:newPassword, disabled:$parent.privacy.PageName() == 'Detail'"
+						placeholder="Enter Privacy new price">
+				</div>
+
+				<div id="prv_frm_confirm" class="form-group">
+					<label class="control-label" for="inputConfirmPassword">Confirm Password
+						Available</label> <input type="text" class="form-control" id="inputConfirmPassword"
+						data-bind="textInput:confirmPassword, disabled:$parent.privacy.PageName() == 'Detail'"
+						placeholder="Enter Privacy available">
+				</div>
+				<!-- /ko -->
+				
+				<button type="submit" class="btn btn-warning"
+					data-bind="click:function(data,type){$root.account_detail.privacy.managePrivacy('UpdatePrivacy');}">
+					Save Privacy</button>
+
+				<button type="submit" class="btn btn-info"
+					data-bind="click:function(data,type){$root.account_detail.index();}">
+					Back</button>
+
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!-- /ko -->
+		
+	</div>
+</div>

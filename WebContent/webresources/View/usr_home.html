@@ -1,0 +1,102 @@
+<div id="home-wrapper" class="col-xs-12 padd0">
+	<!-- ko if:$root.PageName() == 'Home' -->
+    <div id="home-slider" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="webresources/style/images/default_slide.png" width="100%"  alt="Third Slide">
+                <div class="carousel-caption">
+                    Third Slide
+                </div>
+            </div>
+            <div class="item">
+                <img src="webresources/style/images/default_slide.png" width="100%"  alt="Second Slide">
+                <div class="carousel-caption">
+                    Second Slide
+                </div>
+            </div>
+            <div class="item">
+                <img src="webresources/style/images/default_slide.png" width="100%" alt="First Slide">
+                <div class="carousel-caption">
+                    First Slide
+                </div>
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="clear"></div>
+
+	<div class="col-xs-8" >
+		<h2 class="clr11" >Shops</h2>
+	    <div class="bdy-ctgr-list col-xs-12 padd0" style="margin-bottom:40px; height:500px">
+	    	<ul class="ctgr-home">
+	    		<!--ko foreach:$root.category.data-->
+	        	<li class="col-xs-2 ctgr-label bg111 rltv padd0">
+	            	<div class="col-xs-12 abslt toplft paddlr5">
+	            		<h3 class="clr11" data-bind="text:name">Amazon Original Electronics</h3>
+	            	</div>
+	            	<div class="abslt btmrgt padd3">
+	            		<span class="txt12b clr3 curpo" 
+	            		data-bind="click:function(data, event){$root.navigate('Category', data)}">See more</span>
+	            	</div>
+	            </li>
+	        	<li class="col-xs-10 pro-list bg66" >
+	            	<ul>
+	            		<!--ko foreach:products-->
+	                	<li style="width:160px" class="curpo" data-bind="click:function(data, event){$root.navigate('Products', data)}">
+	            			<img data-bind="attr:{src:'webresources/file_upload/sample/'+images()}" width="100%">
+	            		</li>
+	                	<!--/ko -->
+	                </ul>
+	            </li>
+	            <!--/ko-->
+	        </ul>
+	        <div class="clear"></div>
+	    </div>
+	    <div class="clear col-xs-12"></div>
+	</div>
+	<div class="col-xs-4 paddtb20">
+		<div class="list-group">
+			<!-- ko ifnot:$root.category.order.cart().length == 0 -->
+			<a href="#" class="list-group-item active">
+				<h4 class="list-group-item-heading">Your Purchase Order</h4>
+			</a>
+			<!-- ko foreach:$root.category.order.cart -->
+			<a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading" data-bind="text:productName">Product Name</h4>
+				<p class="list-group-item-text" >
+					<strong>Unit Price : </strong><span data-bind="text:unitPrice"></span>
+					<strong> Quantity : </strong><span data-bind="text:quantity"></span>
+					<strong> Total : </strong><span data-bind="text:total"></span>
+				</p>
+				<p class="list-group-item-text" >
+					<!-- ko if:quantity() > 1 -->
+					<button class="btn btn-link btn-xs">Remove All</button>
+					<!-- /ko -->
+					<button class="btn btn-link btn-xs">Remove Single</button>
+				</p>
+			</a>
+			<!-- /ko -->
+			<!-- /ko -->
+		</div>
+	</div>
+	<!-- /ko -->
+	
+</div>
+<div class="clear"></div>

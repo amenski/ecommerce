@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.spring.project.model.Account" table="account">
+		<id name="id" type="int">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<property name="email" type="string">
+			<column name="email"  />
+		</property>
+		<property name="password" type="string">
+			<column name="password"  />
+		</property>
+		<property name="image" type="string">
+			<column name="image" length="65535" />
+		</property>
+		<property name="accountType" type="string">
+			<column name="account_type"  />
+		</property>
+		<property name="accountStatus" type="string">
+			<column name="account_status" />
+		</property>
+		
+		<!-- If we add inverse=true to the this set, we are setting the owner/parent 
+			of the relationship to be address. i.e. we have to save address, saving account 
+			will not save the address. The documentation of parent child says that child(an 
+			object which a reference of the other object) should be saved. With inverse 
+			set false on the child, you can save the entire objects by saving the parent. -->
+			
+		<set name="wishList" table="account_wish_list"  lazy="false" fetch="select">
+			<key>
+				<column name="account_id" not-null="true" />
+			</key>
+			<one-to-many class="com.spring.project.model.AccountWishList" />
+		</set>
+		
+		<set name="addresses" table="address"  lazy="false" fetch="select">
+			<key>
+				<column name="account_id" not-null="true" />
+			</key>
+			<one-to-many class="com.spring.project.model.Address" />
+		</set>
+		
+		<set name="products" table="product"  
+				inverse="true" lazy="false" fetch="select">
+			<key>
+				<column name="account_id" not-null="true" />
+			</key>
+			<one-to-many class="com.spring.project.model.Product" />
+		</set>
+		
+		<joined-subclass name="com.spring.project.model.AccountIndividual"
+			table="account_individual" extends="Account">
+			<key column="account_id"></key>
+			<property name="dob" type="date">
+				<column name="dob" length="10" />
+			</property>
+			<property name="name" type="string">
+				<column name="first_name" />
+			</property>
+			<property name="gender" type="string">
+				<column name="gender" />
+			</property>
+			<property name="lastName" type="string">
+				<column name="last_name" />
+			</property>
+			<property name="middleName" type="string">
+				<column name="middle_name" />
+			</property>
+		</joined-subclass>
+
+		<joined-subclass name="com.spring.project.model.AccountOrganization"
+			table="account_organization" extends="Account">
+			<key column="account_id"></key>
+			<property name="description" type="string">
+				<column name="description" />
+			</property>
+			<property name="establishedBy" type="string">
+				<column name="established_by" />
+			</property>
+			<property name="establishedDate" type="date">
+				<column name="established_date" length="10" />
+			</property>
+			<property name="legalStatus" type="string">
+				<column name="legal_status" />
+			</property>
+			<property name="name" type="string">
+				<column name="name" />
+			</property>
+			 
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

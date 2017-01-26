@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+      "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.spring.project.model.AccountWishList" table="account_wish_list">
+		<composite-id name="accountWishListId">
+			<key-property name="accountId">
+				<column name="account_id"></column>
+			</key-property>
+			<key-property name="productId">
+				<column name="product_id"></column>
+			</key-property>
+		</composite-id>
+		
+		 <many-to-one name="product" class="com.spring.project.model.Product" 
+			lazy="false" fetch="select" insert="false" update="false">
+		<column name="product_id" not-null="true"></column>
+		</many-to-one>
+		 
+	</class>
+</hibernate-mapping>
